@@ -1,0 +1,31 @@
+html {
+  scroll-padding: 66px;
+}
+
+header {
+  background-color: #000000;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-bottom: 3px solid #ffffff;
+}
+header p {
+  margin: 18px;
+}
+header a {
+  border-bottom: 5px solid #000000;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 25px;
+  margin-right: 32px;
+  transition: border 0.5s ease-out;
+}
+header a:hover {
+  border-bottom: 5px solid #ffffff;
+  transition: border 0.5s ease-out;
+}
+header ::selection {
+  background-color: #0000;
+}

@@ -1,0 +1,10 @@
+html {
+  scroll-behavior: smooth;
+  background-color: #404040;
+}
+
+article {
+  margin-top: 84px;
+  margin-left: 8%;
+  width: 84%;
+}

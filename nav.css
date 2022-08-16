@@ -1,0 +1,32 @@
+nav {
+  background-color: #00000080;
+  transition: background-color 0.5s ease-out;
+  border: 3px solid #808080;
+  z-index: 1;
+  position: fixed;
+  right: 1%;
+  bottom: 5%;
+  font-size: 33px;
+}
+nav p {
+  padding: 0;
+  margin: 0;
+}
+nav a {
+  color: #ffffff80;
+  text-decoration: none;
+  transition: color 0.5s ease-out;
+  padding: 12px;
+}
+nav a:hover {
+  color: #ffffff;
+  transition: color 0.5s ease-out;
+}
+nav ::selection {
+  background-color: #0000;
+}
+
+nav:hover {
+  background-color: #000000;
+  transition: background-color 0.5s ease-out;
+}
