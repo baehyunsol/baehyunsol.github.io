@@ -1,12 +1,12 @@
 nav {
   background-color: #00000080;
   transition: background-color 0.5s ease-out;
-  border: 3px solid #808080;
+  border: 0.143rem solid #808080;
   z-index: 1;
   position: fixed;
   right: 1%;
   bottom: 5%;
-  font-size: 33px;
+  font-size: 1.571rem;
 }
 nav p {
   padding: 0;
@@ -16,7 +16,7 @@ nav a {
   color: #ffffff80;
   text-decoration: none;
   transition: color 0.5s ease-out;
-  padding: 12px;
+  padding: 0.571rem;
 }
 nav a:hover {
   color: #ffffff;

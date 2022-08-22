@@ -3,8 +3,18 @@ html {
   background-color: #404040;
 }
 
+@media screen and (orientation: landscape) {
+  article {
+    margin-left: 8%;
+    width: 84%;
+  }
+}
+@media screen and (orientation: portrait) {
+  article {
+    margin-left: 5%;
+    width: 90%;
+  }
+}
 article {
-  margin-top: 84px;
-  margin-left: 8%;
-  width: 84%;
+  margin-top: 3.999rem;
 }

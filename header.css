@@ -1,5 +1,5 @@
 html {
-  scroll-padding: 66px;
+  scroll-padding: 3.142rem;
 }
 
 header {
@@ -9,21 +9,21 @@ header {
   left: 0;
   top: 0;
   width: 100%;
-  border-bottom: 3px solid #ffffff;
+  border-bottom: 0.143rem solid #ffffff;
 }
 header p {
-  margin: 18px;
+  margin: 0.857rem;
 }
 header a {
-  border-bottom: 5px solid #000000;
+  border-bottom: 0.238rem solid #000000;
   text-decoration: none;
   color: #ffffff;
-  font-size: 25px;
-  margin-right: 32px;
+  font-size: 1.19rem;
+  margin-right: 1.524rem;
   transition: border 0.5s ease-out;
 }
 header a:hover {
-  border-bottom: 5px solid #ffffff;
+  border-bottom: 0.238rem solid #ffffff;
   transition: border 0.5s ease-out;
 }
 header ::selection {
