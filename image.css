@@ -1,0 +1,32 @@
+img {
+  cursor: pointer;
+}
+
+#modal-box {
+  display: none;
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #00000080;
+}
+
+#modal-img {
+  display: block;
+  margin: auto;
+  max-width: 62.86rem;
+  max-height: 62.86rem;
+}
+
+#close-button {
+  font-size: 1.19rem;
+  color: #ffffff;
+  text-align: center;
+  background-color: #000000;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
