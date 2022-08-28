@@ -22,7 +22,7 @@
 
 
     <nav>
-<p><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p>
+<p><button id="toggletheme">&#9728;</button><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p>
     </nav>
 
 
@@ -133,7 +133,7 @@
 <span class="code-fence-row"><span class="code-fence-code">This text is centered.</span></span>
 <span class="code-fence-row"><span class="code-fence-code"></span></span>
 <span class="code-fence-row"><span class="code-fence-code">[[/center]]</span></span>
-</code></pre><h3 id="highlights">Highlights</h3><p><code class="short">[[highlight = red]] This text is highlighted! [[/highlight]]</code> is rendered to <code class="short">&lt;span class=&quot;highlight-red&quot;&gt; This text is highlighted! &lt;/span&gt;</code>. The same rule is applied to the other colors.</p><p>To see available colors, read the <a href="#colors">Colors</a> section.</p><h3 id="box">Box</h3><p><code class="short">[[box]]A text in a box.[[/box]]</code> is rendered to <code class="short">&lt;div class=&quot;box&quot;&gt;A text in a box.&lt;/div&gt;</code>.</p><p><code class="short">[[box, no border]]A text in a box.[[/box]]</code> is rendered to <code class="short">&lt;div class=&quot;box no-border&quot;&gt;A text in a box.&lt;/div&gt;</code>.</p><pre><code><span class="code-fence-row"><span class="code-fence-code">[[box]]</span></span>
+</code></pre><h3 id="highlights">Highlights</h3><p><code class="short">[[highlight = red]] This text is highlighted! [[/highlight]]</code> is rendered to <code class="short">&lt;span class=&quot;highlight-red&quot;&gt; This text is highlighted! &lt;/span&gt;</code>. The same rule is applied to the other colors.</p><p><span class="highlight-red"> This text is highlighted! </span></p><p>To see available colors, read the <a href="#colors">Colors</a> section.</p><h3 id="box">Box</h3><p><code class="short">[[box]]A text in a box.[[/box]]</code> is rendered to <code class="short">&lt;div class=&quot;box&quot;&gt;A text in a box.&lt;/div&gt;</code>.</p><p><code class="short">[[box, no border]]A text in a box.[[/box]]</code> is rendered to <code class="short">&lt;div class=&quot;box no-border&quot;&gt;A text in a box.&lt;/div&gt;</code>.</p><pre><code><span class="code-fence-row"><span class="code-fence-code">[[box]]</span></span>
 <span class="code-fence-row"><span class="code-fence-code"></span></span>
 <span class="code-fence-row"><span class="code-fence-code">A paragraph in a box.</span></span>
 <span class="code-fence-row"><span class="code-fence-code"></span></span>
@@ -186,6 +186,7 @@ function copy_code_to_clipboard(index) {
     </footer>
 
 
+    <script src="colors.js"></script>
 </body>
 
 </html>
