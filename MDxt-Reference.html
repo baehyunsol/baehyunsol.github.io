@@ -70,7 +70,7 @@
 <span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        </span><span class="color-white">&lt;/</span><span class="color-red">ol</span><span class="color-white">&gt;</span></span></span>
 <span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    </span><span class="color-white">&lt;/</span><span class="color-red">li</span><span class="color-white">&gt;</span></span></span>
 <span class="code-fence-row"><span class="code-fence-code"><span class="color-white">&lt;/</span><span class="color-red">ul</span><span class="color-white">&gt;</span></span></span>
-</code></pre><p>which looks like</p><ul class="no-bullet-list"><li>no</li><li>bullet<ul><li>123</li><li>456</li></ul></li><li>789<ol type="a" start="20"><li><code class="short">[[start = t]]</code> is invalid.</li><li>hahaha</li></ol></li></ul><h3 id="fenced-code-blocks">Fenced Code Blocks</h3><p>Fenced code blocks are rendered to <code class="short">&lt;table&gt;</code> tags in html. Be aware if you&apos;re writing custom css files for mdxt.</p><pre><code><span class="code-fence-row"><span class="code-fence-code">```rust, line_num, highlight(6, 17, 22)</span></span>
+</code></pre><p>which looks like</p><ul class="no-bullet-list"><li>no</li><li>bullet<ul><li>123</li><li>456</li></ul></li><li>789<ol type="a" start="20"><li><code class="short">[[start = t]]</code> is invalid.</li><li>hahaha</li></ol></li></ul><h3 id="fenced-code-blocks">Fenced Code Blocks</h3><pre><code><span class="code-fence-row"><span class="code-fence-code">```rust, line_num, highlight(6, 17, 22)</span></span>
 <span class="code-fence-row"><span class="code-fence-code">/*</span></span>
 <span class="code-fence-row"><span class="code-fence-code">    multiline</span></span>
 <span class="code-fence-row"><span class="code-fence-code">    comment</span></span>
@@ -163,13 +163,7 @@
 <span class="code-fence-row"><span class="code-fence-code">red texts.</span></span>
 <span class="code-fence-row"><span class="code-fence-code"></span></span>
 <span class="code-fence-row"><span class="code-fence-code">[[/red]]</span></span>
-</code></pre><p>As you see above, the first and the last paragraph only consist of a macro. The macro will be rendered to <code class="short">&lt;div class=&quot;color-red&quot;&gt;</code>.</p><h2 id="plugins">Plugins</h2><p>WIP</p><h2 id="characters">Characters</h2><h3 id="escapes">Escapes</h3><p>Backslashes (<code class="short">\</code>) inside code spans and fenced code blocks are not escaped. All the other backslash characters are escape characters.</p><h3 id="tabs">Tabs</h3><p>All the tab characters (<code class="short">\t</code>) are converted to 4 whitespaces. All the newline characters except <code class="short">\n</code> are ignored.</p><hr class="footnote-hr"/><p><a id="footnote-cite-0"></a>0. <a href="#footnote-ref-0"> [0]</a> Hi, there!<br/><a id="footnote-cite-1"></a>1. <a href="#footnote-ref-1"> [1]</a> Hello!<br/></p><script>/*<![CDATA[*/function collapse_table(n) {
-    var head = document.getElementById("table-collapse-toggle-" + n);
-    head.classList.toggle("collapsed");
-
-    var content = document.getElementById("collapsible-table-" + n);
-    content.classList.toggle("invisible");
-}
+</code></pre><p>As you see above, the first and the last paragraph only consist of a macro. The macro will be rendered to <code class="short">&lt;div class=&quot;color-red&quot;&gt;</code>.</p><h2 id="plugins">Plugins</h2><p>WIP</p><h2 id="characters">Characters</h2><h3 id="escapes">Escapes</h3><p>Backslashes (<code class="short">\</code>) inside code spans and fenced code blocks are not escaped. All the other backslash characters are escape characters.</p><h3 id="tabs">Tabs</h3><p>All the tab characters (<code class="short">\t</code>) are converted to 4 whitespaces. All the newline characters except <code class="short">\n</code> are ignored.</p><hr class="footnote-hr"/><p><a id="footnote-cite-0"></a>0. <a href="#footnote-ref-0"> [0]</a> Hi, there!<br/><a id="footnote-cite-1"></a>1. <a href="#footnote-ref-1"> [1]</a> Hello!<br/></p><script>/*<![CDATA[*/
 const fenced_code_block_contents = ["", "", "", "", "", "", "/*\n    multiline\n    comment\n*/\n// single line comment\nfn main() {\n    let mut x = 3;\n    let mut y = if x == 3 {\n        4\n    } else {\n        5\n    };\n    let z = x < 3 && y > 4;\n    println!(\"Hello World!\\n\");\n    println!(\"{:?}\", 3 + 4);\n}\n\npub struct Point {\n    x: f32,\n    y: f32\n}\n\npub const CONST: u32 = 1;"];
 
 function copy_code_to_clipboard(index) {
@@ -187,6 +181,6 @@ function copy_code_to_clipboard(index) {
 
 
     <script src="colors.js"></script>
-</body>
+<script src="collapsible_tables.js"></script></body>
 
 </html>
