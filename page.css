@@ -62,22 +62,43 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
   --gold-compl-trans: #003fbf80;
 }
 
+:root {
+  --horiz-padding: 0px;
+}
+
+@media screen and (orientation: landscape) {
+  article {
+    margin-top: 3.999rem;
+    margin-bottom: 0px;
+    margin-left: 9%;
+    margin-right: 9%;
+    max-width: 82%;
+  }
+}
+@media screen and (orientation: portrait) {
+  article {
+    margin-top: 3.999rem;
+    margin-bottom: 0px;
+    margin-left: 5%;
+    margin-right: 5%;
+    max-width: 90%;
+  }
+}
+@media print {
+  body .markdown pre {
+    overflow: none;
+  }
+}
+article, footer {
+  padding-left: var(--horiz-padding);
+  padding-right: var(--horiz-padding);
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  padding: 0.571rem;
   background-color: var(--dark);
   transition: background-color 0.5s ease-out;
-}
-
-@media print {
-  body {
-    padding-left: 4.572rem;
-    padding-right: 4.572rem;
-  }
-  body .markdown pre {
-    overflow: none;
-  }
 }
