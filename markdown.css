@@ -62,11 +62,6 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
   --gold-compl-trans: #003fbf80;
 }
 
-@media screen and (orientation: landscape) {
-  html {
-    font-size: 21px;
-  }
-}
 body .markdown {
   background-color: var(--dark);
   color: var(--white);
@@ -95,6 +90,13 @@ body .markdown img {
 .markdown div.footnote-cite {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.markdown span.footnote-ref {
+  vertical-align: super;
+  font-size: 0.762rem;
+}
+.markdown span.footnote-ref a {
+  border: none;
 }
 
 /* Blockquote */

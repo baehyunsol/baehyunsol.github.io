@@ -67,6 +67,10 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
 }
 
 @media screen and (orientation: landscape) {
+  html {
+    font-size: 21px;
+  }
+
   article {
     margin-top: 3.999rem;
     margin-bottom: 0px;
@@ -76,6 +80,10 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
   }
 }
 @media screen and (orientation: portrait) {
+  html {
+    font-size: 16px;
+  }
+
   article {
     margin-top: 3.999rem;
     margin-bottom: 0px;
@@ -95,6 +103,7 @@ article, footer {
 }
 
 html {
+  font-family: "Nanum Gothic";
   scroll-behavior: smooth;
 }
 
