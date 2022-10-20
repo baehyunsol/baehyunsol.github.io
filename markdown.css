@@ -649,27 +649,40 @@ body .markdown img {
   border-collapse: collapse;
   margin: 1.571rem 1rem;
 }
-.markdown th {
+.markdown table th {
   background-color: var(--gray);
   transition: padding 0.5s ease-out;
+  border: 0.143rem solid var(--lightgray);
 }
-.markdown td, .markdown th {
+.markdown table tr th:first-child {
+  border-left: 0.238rem solid var(--gray);
+}
+.markdown table tr th:last-child {
+  border-right: 0.238rem solid var(--gray);
+}
+.markdown table tr:first-child th {
+  border-top: 0.238rem solid var(--gray);
+}
+.markdown table tr:last-child th {
+  border-bottom: 0.238rem solid var(--gray);
+}
+.markdown table td, .markdown table th {
   padding: 0.857rem;
 }
-.markdown tr:nth-last-child(odd) {
+.markdown table tr:nth-last-child(odd) {
   background-color: var(--black);
 }
-.markdown tr:nth-last-child(even) {
+.markdown table tr:nth-last-child(even) {
   background-color: var(--dark);
 }
-.markdown thead.collapsible {
+.markdown table thead.collapsible {
   cursor: pointer;
 }
-.markdown thead.collapsed th {
+.markdown table thead.collapsed th {
   padding: 0.286rem;
   transition: padding 0.5s ease-out;
 }
-.markdown .invisible th, .markdown .invisible td {
+.markdown table .invisible th, .markdown table .invisible td {
   display: none;
 }
 
