@@ -1,0 +1,145 @@
+<!DOCTYPE html><html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    
+    <title>extra-assignment</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> 
+    
+    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+
+
+
+
+    <nav>
+<p><a id="settingsopenbutton">&#9728;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><p><div id="settingsmenu"> <a id="settingsclosebutton">&#10006;</a> <a id="changethemebutton">Set Light Theme</a> <a id="loosepaddingbutton">&#8592; &#8594;</a> <a id="tightpaddingbutton">&#8594; &#8592;</a> </div></p></div>
+    </nav>
+
+
+    <article class="markdown">
+        <a id="top"></a>
+<h1 id="extra-assignment">Extra Assignment</h1><div class="align-right"><p>Baehyunsol</p></div><p>What happens if I attempt to read the write end of a pipe, or vice versa?</p><h2 id="pipe">Pipe</h2><p>Pipe is a special Unix file that allows processes to share data. The <code class="inline-code-span">pipe()</code> function creates two pipes, one for read and the other for write. Different processes can send/receive data via the pipe.</p><h2 id="experiment">Experiment</h2><p>Below is the code I used for the experiment. The original code is written by <a href="https://tldp.org/LDP/lpg/node11.html">https://tldp.org/LDP/lpg/node11.html</a>, and I modified a few lines.</p><pre class="fenced-code-block line-num-width-1"><code><span class="code-fence-row"><span class="code-fence-index">1</span><span class="code-fence-code"><span class="color-gray">//</span><span class="color-gray"> https://tldp.org/LDP/lpg/node11.html
+</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">2</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">3</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">string.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">4</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">unistd.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">5</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">stdio.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">6</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">stdlib.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">7</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">errno.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">8</span><span class="code-fence-code"><span class="color-violet">#include</span> <span class="color-white">&lt;</span><span class="color-green">sys/types.h</span><span class="color-white">&gt;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">9</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">10</span><span class="code-fence-code"><span class="color-violet">#define</span> <span class="color-white">READ</span>   <span class="color-gold">0</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">11</span><span class="code-fence-code"><span class="color-violet">#define</span> <span class="color-white">WRITE</span>  <span class="color-gold">1</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">12</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">13</span><span class="code-fence-code"><span class="color-violet">int</span> <span class="color-aqua">main</span><span class="color-white">(</span><span class="color-violet">void</span><span class="color-white">)</span> <span class="color-white">{</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">14</span><span class="code-fence-code">        <span class="color-violet">int</span><span class="color-white">     pfd</span><span class="color-white">[</span><span class="color-gold">2</span><span class="color-white">]</span><span class="color-white">,</span><span class="color-white"> write_return</span><span class="color-white">,</span><span class="color-white"> read_return</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">15</span><span class="code-fence-code">        <span class="color-white">pid_t</span><span class="color-white">   pid</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">16</span><span class="code-fence-code">        <span class="color-violet">char</span><span class="color-white">    string</span><span class="color-white">[</span><span class="color-white">]</span> <span class="color-white">=</span> <span class="color-white">&quot;</span><span class="color-green">Hello, world!</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">17</span><span class="code-fence-code">        <span class="color-violet">char</span><span class="color-white">    readbuffer</span><span class="color-white">[</span><span class="color-gold">80</span><span class="color-white">]</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">18</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">19</span><span class="code-fence-code">        <span class="color-aqua">pipe</span><span class="color-white">(</span><span class="color-white">pfd</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">20</span><span class="code-fence-code"><span class="color-white">        pid </span><span class="color-white">=</span> <span class="color-aqua">fork</span><span class="color-white">(</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">21</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">22</span><span class="code-fence-code">        <span class="color-violet">if</span><span class="color-white">(</span><span class="color-white">pid </span><span class="color-white">==</span> <span class="color-gold">0</span><span class="color-white">)</span> <span class="color-white">{</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">23</span><span class="code-fence-code">                <span class="color-aqua">close</span><span class="color-white">(</span><span class="color-white">pfd</span><span class="color-white">[</span><span class="color-white">READ</span><span class="color-white">]</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">24</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">25</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">errno, before write: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> errno</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">26</span><span class="code-fence-code"><span class="color-white">                write_return </span><span class="color-white">=</span> <span class="color-aqua">write</span><span class="color-white">(</span><span class="color-white">pfd</span><span class="color-white">[</span><span class="color-white">WRITE</span><span class="color-white">]</span><span class="color-white">,</span><span class="color-white"> string</span><span class="color-white">,</span> <span class="color-white">(</span><span class="color-emerald">strlen</span><span class="color-white">(</span><span class="color-white">string</span><span class="color-white">)</span><span class="color-white">+</span><span class="color-gold">1</span><span class="color-white">)</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">27</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">write_return: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> write_return</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">28</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">errno, after write: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> errno</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">29</span><span class="code-fence-code">                <span class="color-emerald">exit</span><span class="color-white">(</span><span class="color-gold">0</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">30</span><span class="code-fence-code">        <span class="color-white">}</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">31</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">32</span><span class="code-fence-code">        <span class="color-violet">else</span> <span class="color-white">{</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">33</span><span class="code-fence-code">                <span class="color-aqua">close</span><span class="color-white">(</span><span class="color-white">pfd</span><span class="color-white">[</span><span class="color-white">WRITE</span><span class="color-white">]</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">34</span><span class="code-fence-code">
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">35</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">errno, before read: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> errno</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">36</span><span class="code-fence-code"><span class="color-white">                read_return </span><span class="color-white">=</span> <span class="color-aqua">read</span><span class="color-white">(</span><span class="color-white">pfd</span><span class="color-white">[</span><span class="color-white">READ</span><span class="color-white">]</span><span class="color-white">,</span><span class="color-white"> readbuffer</span><span class="color-white">,</span> <span class="color-white">sizeof</span><span class="color-white">(</span><span class="color-white">readbuffer</span><span class="color-white">)</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">37</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">read_return: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> read_return</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">38</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">errno, after read: </span><span class="color-gold">%d</span><span class="color-emerald">\n</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> errno</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">39</span><span class="code-fence-code">                <span class="color-emerald">printf</span><span class="color-white">(</span><span class="color-white">&quot;</span><span class="color-green">Received string: </span><span class="color-gold">%s</span><span class="color-white">&quot;</span><span class="color-white">,</span><span class="color-white"> readbuffer</span><span class="color-white">)</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">40</span><span class="code-fence-code">        <span class="color-white">}</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">41</span><span class="code-fence-code">        
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">42</span><span class="code-fence-code">        <span class="color-violet">return</span> <span class="color-gold">0</span><span class="color-white">;</span>
+</span></span>
+<span class="code-fence-row"><span class="code-fence-index">43</span><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code><button class="copy-fenced-code" onclick="copy_code_to_clipboard(0)">Copy</button></pre><p>The experiment is simple. All I have to do is change line 10 and 11.</p><h3 id="read-0-write-1">Read 0, Write 1</h3><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code">errno, before read: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">errno, before write: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">write_return: 15</span></span>
+<span class="code-fence-row"><span class="code-fence-code">errno, after write: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">read_return: 15</span></span>
+<span class="code-fence-row"><span class="code-fence-code">errno, after read: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">Received string: Hello, world!</span></span>
+</code></pre><p>It works fine.</p><h3 id="read-1-write-0">Read 1, Write 0</h3><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code">errno, before read: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">read_return: -1</span></span>
+<span class="code-fence-row"><span class="code-fence-code">errno, after read: 9</span></span>
+<span class="code-fence-row"><span class="code-fence-code">Received string: @errno, before write: 0</span></span>
+<span class="code-fence-row"><span class="code-fence-code">write_return: -1</span></span>
+<span class="code-fence-row"><span class="code-fence-code">errno, after write: 9</span></span>
+</code></pre><p>The <code class="inline-code-span">read</code> and <code class="inline-code-span">write</code> function fails. They both returns -1 and set <code class="inline-code-span">errno</code> to 9, which is <a href="https://man7.org/linux/man-pages/man2/write.2.html">EBADF</a>. The error means the file descriptor is not open for writing.</p><p>I guess the <code class="inline-code-span">pipe</code> function sets read/write permission of both ends, so that I can only read or write to each end.</p><h2 id="test-environment">Test Environment</h2><p>I ran the test code on my local machine, which runs Fedora 36. I wanted to know if the code has the same behavior on other platforms. So I ran the codes on various platforms. See below.</p><ul><li>Cloud<ul><li><a href="https://replit.com">replit.com</a></li><li>NixOS, clang 12.0.1</li><li>In this environment, the child process doesn&apos;t print anything when the error occurs.</li></ul></li><li>Local Machine<ul><li>Windows 10, zig cc (it uses clang 13.0.1 under the hood)</li><li>The <code class="inline-code-span">pipe</code> and the <code class="inline-code-span">fork</code> function do not work. I guess it&apos;s because Windows is not UNIX.</li></ul></li><li>VirtualBox<ul><li>Haiku OS R1B3, gcc 8.3</li><li>The return value of <code class="inline-code-span">write</code> and <code class="inline-code-span">read</code> are the same as that of Fedora.</li><li><code class="inline-code-span">errno</code> is -2147459072. Haiku&apos;s Unix implementation is not complete yet.</li></ul></li></ul><p>I also tried <a href="https://github.com/SerenityOS/serenity">Serenity OS</a>, but I failed to install GCC on it.</p><script>/*<![CDATA[*/
+const fenced_code_block_contents = ["// https://tldp.org/LDP/lpg/node11.html\n\n#include <string.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <errno.h>\n#include <sys/types.h>\n\n#define READ   0\n#define WRITE  1\n\nint main(void) {\n        int     pfd[2], write_return, read_return;\n        pid_t   pid;\n        char    string[] = \"Hello, world!\\n\";\n        char    readbuffer[80];\n\n        pipe(pfd);\n        pid = fork();\n\n        if(pid == 0) {\n                close(pfd[READ]);\n\n                printf(\"errno, before write: %d\\n\", errno);\n                write_return = write(pfd[WRITE], string, (strlen(string)+1));\n                printf(\"write_return: %d\\n\", write_return);\n                printf(\"errno, after write: %d\\n\", errno);\n                exit(0);\n        }\n\n        else {\n                close(pfd[WRITE]);\n\n                printf(\"errno, before read: %d\\n\", errno);\n                read_return = read(pfd[READ], readbuffer, sizeof(readbuffer));\n                printf(\"read_return: %d\\n\", read_return);\n                printf(\"errno, after read: %d\\n\", errno);\n                printf(\"Received string: %s\", readbuffer);\n        }\n        \n        return 0;\n}"];
+
+function copy_code_to_clipboard(index) {
+    navigator.clipboard.writeText(fenced_code_block_contents[index]);
+}/*]]>*/</script>
+        <a id="bottom"></a>
+    </article>
+
+
+
+
+
+    <script src="colors.js"></script>
+
+    
+    <script src="nav.js"></script>
+    
+</body>
+
+</html>
