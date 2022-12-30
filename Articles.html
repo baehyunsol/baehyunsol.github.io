@@ -6,9 +6,10 @@
     
     <title>Articles</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> 
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <!--<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> -->
     
-    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/><link href="header.css" rel="stylesheet"/><link href="footer.css" rel="stylesheet"/>
+    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/><link href="header.css" rel="stylesheet"/>
     
 </head>
 
@@ -16,19 +17,19 @@
 
 
     <header>
-<p><a href="index.html">Home</a> <a href="Articles.html">Articles</a> <a href="Tags.html">Tags</a></p>
+<p><div class="topmenu deactivated"><a href="index.html">Home</a> <a href="Articles.html">Articles</a> <a href="Tags.html">Tags</a></div><div class="mobileview"><a id="navbutton">&#9776;</a></div></p>
     </header>
 
 
 
     <nav>
-<p><a id="settingsopenbutton">&#9728;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><p><div id="settingsmenu"> <a id="settingsclosebutton">&#10006;</a> <a id="changethemebutton">Set Light Theme</a> <a id="loosepaddingbutton">&#8592; &#8594;</a> <a id="tightpaddingbutton">&#8594; &#8592;</a> </div></p></div>
+<p><a id="settingsopenbutton">&#9728;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><p><div id="settingsmenu"> <a id="settingsclosebutton">&#10006;</a> <a id="changethemebutton">Set Light Theme</a> <a id="growhorizontalbutton">Grow Horizontally</a> <a id="shrinkhorizontalbutton">Shrink Horizontally</a> <a id="growfontbutton">Grow Font</a> <a id="shrinkfontbutton">Shrink Font</a> </div></p></div>
     </nav>
 
 
     <article class="markdown">
         <a id="top"></a>
-<h1 id="articles">Articles</h1><h2 id="most-read-articles">Most read articles</h2><ul><li><a href="Search-Engine-Comparison.html">Search-Engine-Comparison</a></li></ul><h2 id="all-articles">All articles</h2><h3 id="october-2022">October 2022</h3><ul><li><span class="size-giant"> <a href="Browser-Compatibility.html">Browser-Compatibility</a> </span> &nbsp;&nbsp;&nbsp;- 22.October.2022<ul><li>Browser compatibility comparison</li></ul></li></ul><h3 id="september-2022">September 2022</h3><ul><li><span class="size-giant"> <a href="MDxt-Reference.html">MDxt-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 30.September.2022<ul><li>MDxt Reference</li></ul></li></ul><h3 id="august-2022">August 2022</h3><ul><li><span class="size-giant"> <a href="MDxt-Character-Reference.html">MDxt-Character-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 26.August.2022<ul><li>There&apos;s no preview for this article.</li></ul></li><li><span class="size-giant"> <a href="Github-Stars-Comparison.html">Github-Stars-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 15.August.2022<ul><li>Github stars comparison</li></ul></li><li><span class="size-giant"> <a href="Loc-Comparison.html">Loc-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 14.August.2022<ul><li>I counted loc(lines of code) of some repositories, just for fun!</li></ul></li><li><span class="size-giant"> <a href="MDxt-Math-Reference.html">MDxt-Math-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 7.August.2022<ul><li>There&apos;s no preview for this article.</li></ul></li></ul><h3 id="july-2022">July 2022</h3><ul><li><span class="size-giant"> <a href="Search-Engine-Comparison.html">Search-Engine-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 20.July.2022<ul><li>Search Engines</li></ul></li></ul>
+<h1 id="articles">Articles</h1><h2 id="most-read-articles">Most read articles</h2><ul><li><a href="Search-Engine-Comparison.html">Search-Engine-Comparison</a></li></ul><h2 id="all-articles">All articles</h2><h3 id="december-2022">December 2022</h3><ul><li><span class="size-giant"> <a href="MDxt-Reference.html">MDxt-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 30.December.2022<ul><li>MDxt Reference</li></ul></li><li><span class="size-giant"> <a href="MDxt-Icon-Reference.html">MDxt-Icon-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 29.December.2022<ul><li>There&apos;s no preview for this article.</li></ul></li></ul><h3 id="october-2022">October 2022</h3><ul><li><span class="size-giant"> <a href="Browser-Compatibility.html">Browser-Compatibility</a> </span> &nbsp;&nbsp;&nbsp;- 22.October.2022<ul><li>Browser compatibility comparison</li></ul></li></ul><h3 id="august-2022">August 2022</h3><ul><li><span class="size-giant"> <a href="MDxt-Character-Reference.html">MDxt-Character-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 26.August.2022<ul><li>There&apos;s no preview for this article.</li></ul></li><li><span class="size-giant"> <a href="Github-Stars-Comparison.html">Github-Stars-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 15.August.2022<ul><li>Github stars comparison</li></ul></li><li><span class="size-giant"> <a href="Loc-Comparison.html">Loc-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 14.August.2022<ul><li>I counted loc(lines of code) of some repositories, just for fun!</li></ul></li><li><span class="size-giant"> <a href="MDxt-Math-Reference.html">MDxt-Math-Reference</a> </span> &nbsp;&nbsp;&nbsp;- 7.August.2022<ul><li>There&apos;s no preview for this article.</li></ul></li></ul><h3 id="july-2022">July 2022</h3><ul><li><span class="size-giant"> <a href="Search-Engine-Comparison.html">Search-Engine-Comparison</a> </span> &nbsp;&nbsp;&nbsp;- 20.July.2022<ul><li>Search Engines</li></ul></li></ul>
         <a id="bottom"></a>
     </article>
 
@@ -36,7 +37,7 @@
 
 
     <footer class="markdown">
-<p><br/></p><p><br/></p><hr/><div class="align-center"><p>2021 ~ 2022 (c) Baehyunsol</p></div>
+<p><br/></p><p><br/></p><hr/><div class="align-center"><p>2021 ~ 2023 &copy; Baehyunsol</p></div>
     </footer>
 
 
@@ -44,6 +45,10 @@
 
     
     <script src="nav.js"></script>
+    
+    
+    
+    <script src="header.js"></script>
     
 </body>
 

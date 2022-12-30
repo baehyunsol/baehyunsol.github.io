@@ -66,6 +66,47 @@ html {
   scroll-padding: 3.142rem;
 }
 
+@media screen and (orientation: portrait) {
+  header .topmenu.activated {
+    display: block;
+  }
+  header .topmenu.deactivated {
+    display: none;
+  }
+  header .topmenu {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    width: 100%;
+    top: 2.642rem;
+    background-color: var(--black);
+    border-bottom: 0.143rem solid var(--white);
+  }
+  header .topmenu a {
+    padding: 0.857rem;
+    display: block;
+  }
+  header .topmenu a:hover {
+    background-color: var(--gray);
+  }
+}
+@media screen and (orientation: landscape) {
+  header .topmenu {
+    display: block;
+  }
+  header .mobileview {
+    display: none;
+  }
+  header p {
+    margin: 0.857rem;
+  }
+  header a {
+    margin-left: 1.524rem;
+  }
+  header a:hover {
+    border-bottom: 0.238rem solid var(--white);
+  }
+}
 header {
   background-color: var(--black);
   position: fixed;
@@ -75,19 +116,23 @@ header {
   width: 100%;
   border-bottom: 0.143rem solid var(--white);
 }
-header p {
+header .mobileview p {
   margin: 0.857rem;
+}
+header .mobileview a {
+  display: block;
+  text-align: right;
+  margin-right: 1.524rem;
+  cursor: pointer;
 }
 header a {
   border-bottom: 0.238rem solid var(--black);
   text-decoration: none;
   color: var(--white);
   font-size: 1.19rem;
-  margin-right: 1.524rem;
   transition: border 0.5s ease-out;
 }
 header a:hover {
-  border-bottom: 0.238rem solid var(--white);
   transition: border 0.5s ease-out;
 }
 header ::selection {

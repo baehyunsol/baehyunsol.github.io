@@ -64,11 +64,13 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
 
 :root {
   --horiz-padding: 0px;
+  --font-size-landscape: 21px;
+  --font-size-portrait: 16px;
 }
 
 @media screen and (orientation: landscape) {
   html {
-    font-size: 21px;
+    font-size: var(--font-size-landscape);
   }
 
   article {
@@ -81,7 +83,7 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
 }
 @media screen and (orientation: portrait) {
   html {
-    font-size: 16px;
+    font-size: var(--font-size-portrait);
   }
 
   article {
@@ -96,6 +98,9 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
   body .markdown pre {
     overflow: none;
   }
+  body .markdown .copy-fenced-code {
+    display: none;
+  }
 }
 article, footer {
   padding-left: var(--horiz-padding);
@@ -103,7 +108,7 @@ article, footer {
 }
 
 html {
-  font-family: "Nanum Gothic";
+  font-family: "Nanum Gothic Coding";
   scroll-behavior: smooth;
 }
 
