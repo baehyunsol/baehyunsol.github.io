@@ -497,6 +497,7 @@ body .markdown img {
   border-radius: 0.286rem;
   padding: 0.286rem;
   background-color: var(--gray);
+  max-width: 80%;
   opacity: 0;
   transition: opacity 0.5s;
 }
