@@ -1,0 +1,131 @@
+<!DOCTYPE html><html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    
+    <title>Rust-Struct-Memory-Layout</title>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <!--<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> -->
+    
+    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/><link href="header.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+
+
+    <header>
+<p><div class="topmenu deactivated"><a href="index.html">Home</a> <a href="Articles.html">Articles</a> <a href="Tags.html">Tags</a></div><div class="mobileview"><a id="navbutton">&#9776;</a></div></p>
+    </header>
+
+
+
+    <nav>
+<p><a id="settingsopenbutton">&#9728;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><div id="settingsmenu"><table><thead><tr><th colspan="2"><div class="align-right"> <span class="size-giant"><a id="settingsclosebutton">&#10006;</a></span></div></th></tr></thead><tbody><tr><td><div class="align-right">Theme:</div></td><td><div class="align-left"><a id="changethemebutton">Set Light Theme</a></div></td></tr><tr><td><div class="align-right">Horizontal Padding:</div></td><td><div class="align-left"><a id="growhorizontalbutton">Grow</a> <a id="shrinkhorizontalbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Font Size:</div></td><td><div class="align-left"><a id="growfontbutton">Grow</a> <a id="shrinkfontbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Settings:</div></td><td><div class="align-left"><a id="savesettingsbutton">Save All</a> <a id="discardsettingsbutton">Discard All</a></div></td></tr></tbody></table></div></div>
+    </nav>
+
+
+    <article class="markdown">
+        <a id="top"></a>
+<div class="align-right"><p>Last Updated: 19.Feburary.2023</p><p>Tags: <a href="tag-rust.html">#rust</a></p></div><h1 id="rust-struct-memory-layout">Rust struct memory layout</h1><p>Rust is a low-level language. That means you can (and have to) manipulate the data at the byte level when using the language. But, unlike C/C++, Rust programmers don&apos;t explicitly call constructors and destructors. It&apos;s difficult to know when it&apos;s destructed. How about <code class="inline-code-span">struct</code>&apos;s padding rules? Are C/C++ padding rules also applied here? Let&apos;s see.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">derive</span><span class="color-white">(Default)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">Foo {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">a</span><span class="color-white">: </span><span class="color-violet">u64</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">b</span><span class="color-white">: </span><span class="color-violet">u8</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">c</span><span class="color-white">: </span><span class="color-violet">u8</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">derive</span><span class="color-white">(Default)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">Bar {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">a</span><span class="color-white">: </span><span class="color-violet">u8</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">b</span><span class="color-white">: </span><span class="color-violet">u64</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">c</span><span class="color-white">: </span><span class="color-violet">u8</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">derive</span><span class="color-white">(Default)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">Empty {}</span></span></span>
+</code></pre><p>I defined 3 structs. <code class="inline-code-span">Foo</code> and <code class="inline-code-span">Bar</code> both have 3 fields, and the sum of their sizes are the same. But their order differ. An ordinary 64bits C compiler would put 7 bytes padding between <code class="inline-code-span">Bar.a</code> and <code class="inline-code-span">Bar.b</code>. A C compiler wouldn&apos;t put any padding in <code class="inline-code-span">Foo</code>. How about Rust? Let&apos;s look at their size.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">fn </span><span class="color-aqua">main</span><span class="color-white">() {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    println!(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        &quot;</span><span class="color-gold">{} {} {}</span><span class="color-emerald">\n</span><span class="color-white">&quot;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        std::mem::size_of::&lt;Foo&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        std::mem::size_of::&lt;Bar&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        std::mem::size_of::&lt;Empty&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    );</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code></pre><p>The result is <code class="inline-code-span">16 16 0</code>. In C, the equivalent code prints <code class="inline-code-span">16 24 0</code>. It means Rust does some kind of optimization that C does not. Did the compiler change the order of the fields? Let&apos;s see.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">let</span><span class="color-white"> foo = Foo::default();</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">let</span><span class="color-white"> bar = Bar::default();</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">println!(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &quot;</span><span class="color-green">foo.a: </span><span class="color-gold">{:x}</span><span class="color-green">, foo.b: </span><span class="color-gold">{:x}</span><span class="color-green">, foo.c: </span><span class="color-gold">{:x}</span><span class="color-emerald">\n</span><span class="color-white">&quot;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;foo.a as *</span><span class="color-violet">const u64 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;foo.b as *</span><span class="color-violet">const u8 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;foo.c as *</span><span class="color-violet">const u8 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">);</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">println!(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &quot;</span><span class="color-green">bar.a: </span><span class="color-gold">{:x}</span><span class="color-green">, bar.b: </span><span class="color-gold">{:x}</span><span class="color-green">, bar.c: </span><span class="color-gold">{:x}</span><span class="color-emerald">\n</span><span class="color-white">&quot;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;bar.a as *</span><span class="color-violet">const u8 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;bar.b as *</span><span class="color-violet">const u64 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &amp;bar.c as *</span><span class="color-violet">const u8 </span><span class="color-white">as </span><span class="color-violet">usize</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">);</span></span></span>
+</code></pre><p>Below is the result.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code">foo.a: e1a0d4f500, foo.b: e1a0d4f508, foo.c: e1a0d4f509</span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code">bar.a: e1a0d4f518, bar.b: e1a0d4f510, bar.c: e1a0d4f519</span></span>
+</code></pre><p>The compiler reordered the fields! The <a href="https://doc.rust-lang.org/stable/reference/types/struct.html">language reference</a> says <code class="inline-code-span">struct</code>&apos;s memory layout is undefined to allow such optimizations. But we can fix it with <code class="inline-code-span">repr</code>. Let&apos;s define the same struct with <code class="inline-code-span">repr</code>s.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">repr</span><span class="color-white">(C)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">derive</span><span class="color-white">(Default)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">Foo {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">a</span><span class="color-white">: </span><span class="color-violet">u64</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">b</span><span class="color-white">: </span><span class="color-violet">u8</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">c</span><span class="color-white">: </span><span class="color-violet">u8</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">repr</span><span class="color-white">(C)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">#[</span><span class="color-red">derive</span><span class="color-white">(Default)]</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">Bar {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">a</span><span class="color-white">: </span><span class="color-violet">u8</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">b</span><span class="color-white">: </span><span class="color-violet">u64</span><span class="color-white">,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">c</span><span class="color-white">: </span><span class="color-violet">u8</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code></pre><p>With <code class="inline-code-span">repr(C)</code>, it follows the C&apos;s rules. Now <code class="inline-code-span">Bar</code> occupies 24 bytes, just like in C. Also, the fields are not reordered.</p><h2 id="options">Options</h2><p>How about <code class="inline-code-span">Option</code>s? How do they look like? I guess it adds an extra field inidicating whether it&apos;s <code class="inline-code-span">None</code> or not.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-white">println!(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &quot;</span><span class="color-gold">{} {} {} {} {} {} {} {}</span><span class="color-emerald">\n</span><span class="color-white">&quot;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Foo&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;Foo&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Bar&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;Bar&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;</span><span class="color-violet">u8</span><span class="color-white">&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;</span><span class="color-violet">u8</span><span class="color-white">&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;</span><span class="color-violet">u16</span><span class="color-white">&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;</span><span class="color-violet">u16</span><span class="color-white">&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">);</span></span></span>
+</code></pre><p>The result is <code class="inline-code-span">16 24 16 24 1 2 2 4</code>. Well, it&apos;s interesting. <code class="inline-code-span">Option&lt;Foo&gt;</code> adds 8 more bytes, while <code class="inline-code-span">Option&lt;u8&gt;</code> adds only one byte. Is that due to the padding rules? Then, why is <code class="inline-code-span">Option&lt;u16&gt;</code> adding two more bytes? I guess it&apos;s related to complicated padding rules, but I can&apos;t figure out why.</p><p>While reading the std document, I found something more interesting. See below.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-white">println!(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    &quot;</span><span class="color-gold">{} {} {} {}</span><span class="color-white">&quot;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Box&lt;</span><span class="color-violet">i32</span><span class="color-white">&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;Box&lt;</span><span class="color-violet">i32</span><span class="color-white">&gt;&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;&amp;</span><span class="color-violet">i32</span><span class="color-white">&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    std::mem::size_of::&lt;Option&lt;&amp;</span><span class="color-violet">i32</span><span class="color-white">&gt;&gt;(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">);</span></span></span>
+</code></pre><p>It&apos;s <code class="inline-code-span">8 8 8 8</code>. Some types don&apos;t use any field to mark whether it&apos;s null or not. Rust guarantees this kind of optimization for the types below.</p><ul><li>Box&lt;U&gt;</li><li>&amp;U</li><li>&amp;mut U</li><li>fn, extern &quot;C&quot; fn</li><li>num::NonZero*</li><li>ptr::NonNull&lt;U&gt;</li><li>#[repr(transparent)] struct around one of the types in this list.</li></ul><p>I guess the compiler uses nullptrs to represent <code class="inline-code-span">None&lt;Box&lt;T&gt;&gt;</code> and other <code class="inline-code-span">None</code> pointers.</p><hr/><p>Though I mentioned constructors/destructors of Rust at the beginning, I&apos;ll talk about them in later articles.</p>
+        <a id="bottom"></a>
+    </article>
+
+
+
+
+    <footer class="markdown">
+<p><br/></p><p><br/></p><hr/><div class="align-center"><p>2021 ~ 2023 &copy; Baehyunsol</p></div>
+    </footer>
+
+
+    <script src="colors.js"></script>
+
+    
+    <script src="nav.js"></script>
+    
+    
+    
+    <script src="header.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html><html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    
+    <title>RC-Counters-in-Rust</title>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <!--<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> -->
+    
+    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/><link href="header.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+
+
+    <header>
+<p><div class="topmenu deactivated"><a href="index.html">Home</a> <a href="Articles.html">Articles</a> <a href="Tags.html">Tags</a></div><div class="mobileview"><a id="navbutton">&#9776;</a></div></p>
+    </header>
+
+
+
+    <nav>
+<p><a id="settingsopenbutton">&#9728;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><div id="settingsmenu"><table><thead><tr><th colspan="2"><div class="align-right"> <span class="size-giant"><a id="settingsclosebutton">&#10006;</a></span></div></th></tr></thead><tbody><tr><td><div class="align-right">Theme:</div></td><td><div class="align-left"><a id="changethemebutton">Set Light Theme</a></div></td></tr><tr><td><div class="align-right">Horizontal Padding:</div></td><td><div class="align-left"><a id="growhorizontalbutton">Grow</a> <a id="shrinkhorizontalbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Font Size:</div></td><td><div class="align-left"><a id="growfontbutton">Grow</a> <a id="shrinkfontbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Settings:</div></td><td><div class="align-left"><a id="savesettingsbutton">Save All</a> <a id="discardsettingsbutton">Discard All</a></div></td></tr></tbody></table></div></div>
+    </nav>
+
+
+    <article class="markdown">
+        <a id="top"></a>
+<div class="align-right"><p>Last Updated: 18.Feburary.2023</p><p>Tags: <a href="tag-rust.html">#rust</a></p></div><h1 id="reference-counting-pointers-in-rust">Reference-Counting Pointers in Rust</h1><p>Reference-counting pointers are one of the most widely used smart pointers. It dynamically tracks the lifetime of an object, and decides when to destruct the item. It seems like Rust doesn&apos;t need such thing. Rust is known for compile time lifetime checking, isn&apos;t it? But unfortunately, Rust does need dynamic memory management. There are some cases where compiler can never know when to free an object. Or there are cases where it&apos;s much simpler to use Reference counters than to deal with borrow checker&apos;s restrictions.</p><p>So, how does Rust implement RC pointers? There are two major obstacles in it.</p><p>First, we can&apos;t decide whom to own the value. If everyone has the copy of the data, that would be too expensive. We want only one copy of the data to exist, and the others should clone the pointer. The easiest way is to give the ownership to the one who calls <code class="inline-code-span">Rc::new()</code>, then give the pointer to the value to the others. But in that case, the value will be freed when the first owner dies. We don&apos;t want that. That&apos;s not what <code class="inline-code-span">Rc</code> is for.</p><p>Second, how do owners mutate the reference count? Rust allows at most one mutable reference to exist per a data. But there must be multiple owners of an <code class="inline-code-span">Rc</code>, who wants to mutate the counter.</p><p>The second one is easy, and the first one is quite tricky. Let&apos;s look at the implementation.</p><p><a href="https://doc.rust-lang.org/std/rc/struct.Rc.html">std doc</a></p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">pub struct </span><span class="color-white">Rc&lt;T: </span><span class="color-dark">?</span><span class="color-white">Sized&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">ptr</span><span class="color-white">: NonNull&lt;RcBox&lt;T&gt;&gt;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">phantom</span><span class="color-white">: PhantomData&lt;RcBox&lt;T&gt;&gt;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code></pre><p>It&apos;s how Rust implements <code class="inline-code-span">Rc</code>. Though it&apos;s only a few lines, there are so many scary-looking names in the code. <code class="inline-code-span">Sized</code> and <code class="inline-code-span">PhantomData</code> are very important Rust concepts, but that&apos;s not what this article is for. We&apos;re not gonna take a closer look at them.</p><p>Let&apos;s first look at <code class="inline-code-span">RcBox</code>, which is an internal data wrapper of <code class="inline-code-span">Rc</code>. <code class="inline-code-span">RcBox</code> looks like below.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">struct </span><span class="color-white">RcBox&lt;T: </span><span class="color-dark">?</span><span class="color-white">Sized&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">strong</span><span class="color-white">: Cell&lt;</span><span class="color-violet">usize</span><span class="color-white">&gt;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">weak</span><span class="color-white">: Cell&lt;</span><span class="color-violet">usize</span><span class="color-white">&gt;,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-red">value</span><span class="color-white">: T,</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code></pre><p><code class="inline-code-span">Rc</code> solves the second problem by using the <code class="inline-code-span">Cell</code> type. It implements an internal mutability. It&apos;s a special type that lets you set/get a data with a read-only reference (<code class="inline-code-span">&amp;</code>). In order to do that, we have to break some basic rules of the language.</p><p>The Rust compiler prevents dangling pointers and double freeing with the <a href="Lifetime-In-Rust.html">lifetime checker</a>. Since the internal mutability stands against the checker, it has some restrictions. The <code class="inline-code-span">Cell</code> type never lets you own the pointer to the value. It moves the data in and out when accessing. It always copies the data.</p><p>The compiler assumes that the value behind <code class="inline-code-span">&amp;</code> never changes. It does lots of optimizations based on the assumption. Mutating the value behind them may corrupt the optimizations, breaking the entire program. So, the language designers marked the type, telling the compiler that this type implements internal mutabilities. It disables some optimizations.</p><p>In order to solve the first problem, <code class="inline-code-span">Rc</code> uses a special type called <code class="inline-code-span">NonNull</code>. Basically, it&apos;s a raw-pointer. As it&apos;s name suggests, it must not be <code class="inline-code-span">null</code>. Does using raw pointers solve the problem? Who owns pointers, then? It&apos;s still difficult to decide how to call the destructor. In order to implement <code class="inline-code-span">Rc</code>, we have to disable the compiler&apos;s auto-destructing. The compiler&apos;s lifetime checker tracks the lifetime of <em>ALL</em> the objects in the code. All the destructor calls are added by the compiler. But, the lifetime of an <code class="inline-code-span">Rc</code> cannot be known at compile-time. So, we have to disable the lifetime checker manually. Below is how we do that.</p><pre class="fenced-code-block"><code><span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">impl</span><span class="color-white">&lt;T&gt; Rc&lt;T&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-violet">pub fn </span><span class="color-aqua">new</span><span class="color-white">(</span><span class="color-red">value</span><span class="color-white">: T) -&gt; Rc&lt;T&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">        <span class="color-violet">unsafe </span><span class="color-white">{</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">            <span class="color-violet">Self</span><span class="color-white">::from_inner(</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">                Box::leak(Box::new(RcBox { strong: Cell::new(</span><span class="color-gold">1</span><span class="color-white">), weak: Cell::new(</span><span class="color-gold">1</span><span class="color-white">), value }))</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">                    .</span><span class="color-emerald">into</span><span class="color-white">(),</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">            )</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">        }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-violet">impl</span><span class="color-white">&lt;T: </span><span class="color-dark">?</span><span class="color-white">Sized&gt; Rc&lt;T&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">    <span class="color-violet">unsafe fn </span><span class="color-aqua">from_inner</span><span class="color-white">(</span><span class="color-red">ptr</span><span class="color-white">: NonNull&lt;RcBox&lt;T&gt;&gt;) -&gt; </span><span class="color-violet">Self </span><span class="color-white">{</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code">        <span class="color-violet">Self </span><span class="color-white">{ ptr, phantom: PhantomData }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">    }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code></pre><p><code class="inline-code-span">Box::leak</code> disables the lifetime checker. It literally causes a memory leak. Once it&apos;s leaked, the <code class="inline-code-span">Rc</code> has to call the destructor of it&apos;s value manually when the reference-count is 0. Below is how it does that.</p><pre class="fenced-code-block line-num-width-1"><code><span class="code-fence-row"><span class="code-fence-index">1</span><span class="code-fence-code"><span class="color-violet">unsafe impl</span><span class="color-white">&lt;</span><span class="color-dark">#</span><span class="color-white">[may_dangle] T: ?Sized&gt; Drop for Rc&lt;T&gt; {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">2</span><span class="code-fence-code">    <span class="color-violet">fn </span><span class="color-aqua">drop</span><span class="color-white">(&amp;</span><span class="color-violet">mut </span><span class="color-red">self</span><span class="color-white">) {</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">3</span><span class="code-fence-code">        <span class="color-violet">unsafe </span><span class="color-white">{</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">4</span><span class="code-fence-code">            <span class="color-red">self</span><span class="color-white">.</span><span class="color-emerald">inner</span><span class="color-white">().</span><span class="color-emerald">dec_strong</span><span class="color-white">();</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">5</span><span class="code-fence-code">            <span class="color-violet">if </span><span class="color-red">self</span><span class="color-white">.</span><span class="color-emerald">inner</span><span class="color-white">().</span><span class="color-emerald">strong</span><span class="color-white">() == </span><span class="color-gold">0 </span><span class="color-white">{</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">6</span><span class="code-fence-code">                <span class="color-gray">// destroy the contained object</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">7</span><span class="code-fence-code"><span class="color-white">                ptr::drop_in_place(</span><span class="color-violet">Self</span><span class="color-white">::get_mut_unchecked(</span><span class="color-red">self</span><span class="color-white">));</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">8</span><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-index">9</span><span class="code-fence-code">                <span class="color-gray">// remove the implicit &quot;strong weak&quot; pointer now that we&apos;ve</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">10</span><span class="code-fence-code">                <span class="color-gray">// destroyed the contents.</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">11</span><span class="code-fence-code">                <span class="color-red">self</span><span class="color-white">.</span><span class="color-emerald">inner</span><span class="color-white">().</span><span class="color-emerald">dec_weak</span><span class="color-white">();</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">12</span><span class="code-fence-code"></span></span>
+<span class="code-fence-row"><span class="code-fence-index">13</span><span class="code-fence-code">                <span class="color-violet">if </span><span class="color-red">self</span><span class="color-white">.</span><span class="color-emerald">inner</span><span class="color-white">().</span><span class="color-emerald">weak</span><span class="color-white">() == </span><span class="color-gold">0 </span><span class="color-white">{</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">14</span><span class="code-fence-code"><span class="color-white">                    Global.</span><span class="color-emerald">deallocate</span><span class="color-white">(</span><span class="color-red">self</span><span class="color-white">.ptr.</span><span class="color-emerald">cast</span><span class="color-white">(), Layout::for_value(</span><span class="color-red">self</span><span class="color-white">.ptr.</span><span class="color-emerald">as_ref</span><span class="color-white">()));</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">15</span><span class="code-fence-code"><span class="color-white">                }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">16</span><span class="code-fence-code"><span class="color-white">            }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">17</span><span class="code-fence-code"><span class="color-white">        }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">18</span><span class="code-fence-code"><span class="color-white">    }</span></span></span>
+<span class="code-fence-row"><span class="code-fence-index">19</span><span class="code-fence-code"><span class="color-white">}</span></span></span>
+</code><button onclick="copy_code_to_clipboard(3)" class="copy-fenced-code">Copy</button></pre><p>When an <code class="inline-code-span">Rc</code> is dropped, it checks whether the counter is 0. If so, it destroys the contained object by calling <code class="inline-code-span">ptr::drop_in_place</code>. You&apos;ve probably never seen it before, because the compiler does it for us usually.</p><p>I also wanted to dig deeper by reading the source of <code class="inline-code-span">ptr::drop_in_place</code> and <code class="inline-code-span">Global.deallocate</code>, but it was no use. Those are compiler-builtins.</p><p>It&apos;s very interesting to look at the unsafeness inside safe APIs. I&apos;ll be back with more Rust std stuffs.</p><script>/*<![CDATA[*/
+const fenced_code_block_contents = ["", "", "", "unsafe impl<#[may_dangle] T: ?Sized> Drop for Rc<T> {\n    fn drop(&mut self) {\n        unsafe {\n            self.inner().dec_strong();\n            if self.inner().strong() == 0 {\n                // destroy the contained object\n                ptr::drop_in_place(Self::get_mut_unchecked(self));\n\n                // remove the implicit \"strong weak\" pointer now that we've\n                // destroyed the contents.\n                self.inner().dec_weak();\n\n                if self.inner().weak() == 0 {\n                    Global.deallocate(self.ptr.cast(), Layout::for_value(self.ptr.as_ref()));\n                }\n            }\n        }\n    }\n}"];
+
+function copy_code_to_clipboard(index) {
+    navigator.clipboard.writeText(fenced_code_block_contents[index]);
+}/*]]>*/</script>
+        <a id="bottom"></a>
+    </article>
+
+
+
+
+    <footer class="markdown">
+<p><br/></p><p><br/></p><hr/><div class="align-center"><p>2021 ~ 2023 &copy; Baehyunsol</p></div>
+    </footer>
+
+
+    <script src="colors.js"></script>
+
+    
+    <script src="nav.js"></script>
+    
+    
+    
+    <script src="header.js"></script>
+    
+</body>
+
+</html>
