@@ -2,10 +2,17 @@
 
 ## Most read articles
 
-- [Search-Engine-Comparison](Search-Engine-Comparison.html)
+- [Vectors-in-Rust](Vectors-in-Rust.html)
 
 ## All articles
 
+
+### May 2023
+
+- [[giant]] [Vectors-in-Rust](Vectors-in-Rust.html) [[/giant]] [[blank=3]]- 7.May.2023
+  - It's the second article of the Rust smart pointers series. This time, it's vectors. If you're writting code in Rust, there's no way you can avoid using this type. Knowing the internals of one of the most frequently used type will improve our code a lot!
+- [[giant]] [IRs-of-the-Rust-language](IRs-of-the-Rust-language.html) [[/giant]] [[blank=3]]- 7.May.2023
+  - The Rust compiler is very complicated. It consists of many modules, and it takes multiple steps to translate a human-readable programming language to a machine code. Though it's not necessary for typical programmers to know the internals of the compiler, it'd be very helpful if we understand how the language works.
 
 ### Feburary 2023
 
