@@ -1,7 +1,7 @@
 # Tags
 
 
-- [#rust](tag-rust.html) (5)
+- [#rust](tag-rust.html) (6)
 - [#comparison](tag-comparison.html) (4)
 - [#documentation](tag-documentation.html) (4)
 - [#mdxt](tag-mdxt.html) (4)
