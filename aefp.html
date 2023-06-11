@@ -1,0 +1,45 @@
+<!DOCTYPE html><html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    
+    <title>고영 기말 발표</title>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <!--<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&amp;display=swap" rel="stylesheet"/> -->
+    
+    <link href="page.css" rel="stylesheet"/><link href="markdown.css" rel="stylesheet"/><link href="nav.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+
+
+
+
+    <nav>
+<p><a id="settingsopenbutton">&#9776;</a><a href="#top">&#9650;</a><a href="#bottom">&#9660;</a></p><div id="settingsmenubg"><div id="settingsmenu"><table><thead><tr><th colspan="2"><div class="align-right"> <span class="size-giant"><a id="settingsclosebutton">&#10006;</a></span></div></th></tr></thead><tbody><tr><td><div class="align-right">Theme:</div></td><td><div class="align-left"><a id="changethemebutton">Set Light Theme</a></div></td></tr><tr><td><div class="align-right">Horizontal Padding:</div></td><td><div class="align-left"><a id="growhorizontalbutton">Grow</a> <a id="shrinkhorizontalbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Font Size:</div></td><td><div class="align-left"><a id="growfontbutton">Grow</a> <a id="shrinkfontbutton">Shrink</a></div></td></tr><tr><td><div class="align-right">Settings:</div></td><td><div class="align-left"><a id="savesettingsbutton">Save All</a> <a id="discardsettingsbutton">Discard All</a></div></td></tr></tbody></table></div></div>
+    </nav>
+
+
+    <article class="markdown">
+        <a id="top"></a>
+<h2 id="대본">대본</h2><p><span class="size-giant">필독!! 시작할 때 panel 중에 한 분이 &quot;welcome... 어쩌구저쩌구 ...how&apos;s your year been?&quot;하고 물어봐주세요!</span></p><p>Well, it&apos;s been a nice year. I spent a lot of time implementing and fixing stuffs, but I really enjoyed it.</p><p>I and my team&apos;ve been working on nushell for the entire year. Here&apos;re the improvements so far.</p><p>Last June, we&apos;ve announced the version 64 of nu. <a href="https://www.nushell.sh/blog/2022-06-14-nushell_0_64.html">링크</a></p><p>Last week, we&apos;ve announced 81. <a href="https://www.nushell.sh/blog/2023-06-06-nushell_0_81.html">링크</a></p><p>The shell has improved a lot last year. We&apos;ve finally implemented the standard library, and we&apos;re working on the stabilization of the lib. It works quite well, anyway. There&apos;s been a lot of requests for the new aliasing model, since the old one is too complicated. We&apos;ve introduce the new aliasing model with version 77, and we&apos;ve deprecated the old one at version 80.</p><p>We&apos;ve also working really hard on the performance optimization. <a href="https://www.nushell.sh/blog/2023-04-04-nushell_0_78.html#speed-improvements-jt">링크</a> Some features are now more than 5 times faster. And of course, we&apos;ve fixed tons of bugs.</p><p>These are the overall visualization of our last year&apos;s work:</p><p><a href="https://github.com/nushell/nushell/issues?page=42&amp;q=is%3Aissue+is%3Aclosed+sort%3Aupdated-desc">링크</a></p><p>This one was closed on Jun 13, which is exactly one year ago. We&apos;ve closed more than 1000 issues then.</p><p><a href="https://github.com/nushell/nushell/graphs/contributors">링크</a></p><p>This graph shows all the commits so far. You can see that the number of commits increased dramatically last year.</p><h2 id="performance-review-후의-질문들">Performance Review 후의 질문들</h2><p>교민: 저건 니네 팀이 한 거지, 니가 한게 아니잖아? 저기서 정확히 니가 한게 뭐임?</p><p>나: There are some issues that I&apos;ve focused on: </p><ul><li><a href="https://github.com/nushell/nushell/issues/8244">링크</a></li><li><a href="https://github.com/nushell/nushell/issues/8202">링크</a></li></ul><p>I worked on fixing ambiguous spec of the shell. The first one is related to datetime spec, and the second one is about case-insensitive flags fo starts-with and ends-with command. Both of them are merged to version 77.</p><hr/><p>석구: nushell 말고 다른 건 안했음?</p><p>나: I also have worked on Macroquad, our multimedia library.</p><ul><li><a href="https://github.com/not-fl3/macroquad/issues/604">링크</a></li></ul><p>I tried to implement a multi-threaded resource loading mechanism, but still struggling due to opengl&apos;s poor multi-thread support. I think I should try another way: building it from scratch using WGPU, which uses Vulkan as its backend.</p><p>석구: But that would take very long time, doesn&apos;t it?</p><p>나: Oh, I&apos;d be fine, because I&apos;m only chaning its backend. All the other parts remain the same, I&apos;m just changing some API function calls.</p><hr/><p>민준: nushell 개발 시작한지 4년 넘었는데 왜 아직도 1.0 안 나옴? 1.0 언제 나오냐? </p><p>나: We&apos;re almost there. Our plan is to release version 1.0 after fixing all the open issues. You&apos;ll see it within this year or the next year!</p><h2 id="협상">협상</h2><p>나: Now that there&apos;re more people using the shell and the ecosystem has gotten way bigger, we have much more issues to fix compared to the last year. We all enjoy working on it, but we need more people. We need more workers for the shell.</p><hr/><p>주사위 1 나왔을 때 대답</p><p>패널 중 아무나: No way, your team already has more than enough developers. We cannot hire more. The shell is not our company&apos;s main product. It&apos;s not even making any profit so far.</p><p>나: We&apos;re not making profit, but you know it&apos;s not for profit. We&apos;re making a platform. Someday people will abandon the old-fashioned bash, and would look for its alternative. We have to be the one. Once our shell becomes dominant, we can control everyone&apos;s command line environment!</p><p>아까 그 패널: I know what you mean. We all agree that the shell is important. But we&apos;re not hiring more. We&apos;re having hard time these days, and we cannot spend more on the shell.</p><p>나: okay...</p><hr/><p>주사위 2~3 나왔을 때 대답</p><p>패널 중 아무나: Well, I&apos;m happy to hear that you all&apos;re doing good. But we want version 1.0 of the shell. We can&apos;t wait forever. Give us clearer roadmap of the shell. If the roadmap seems reasonable, 직원 더 뽑아줄게.</p><p>나: Okay, then I&apos;ll have the presentation on that next Monday.</p><p>아까 그 패널: 굿!</p><h2 id="자료">자료</h2><p>22년 6월 14일: Version 0.64</p><ul><li><a href="https://www.nushell.sh/blog/2022-06-14-nushell_0_64.html">링크</a></li></ul><p><br/></p><p>23년 6월 6일: Version 0.81</p><ul><li><a href="https://www.nushell.sh/blog/2023-06-06-nushell_0_81.html">링크</a></li></ul><p><br/></p><p>Performance Opt: Version 78</p><ul><li><a href="https://www.nushell.sh/blog/2023-04-04-nushell_0_78.html#speed-improvements-jt">링크</a></li></ul><p><br/></p><p>Features</p><ul><li>implemented/stabilized std lib (still working on stabilization)</li><li>new aliasing model</li></ul><p><br/></p><p>issues</p><ul><li><a href="https://github.com/nushell/nushell/issues?page=42&amp;q=is%3Aissue+is%3Aclosed+sort%3Aupdated-desc">링크</a></li><li>저기쯤이 대충 1년 전!</li><li>25 issues per page</li></ul><p><br/></p><p>Contributors</p><ul><li><a href="https://github.com/nushell/nushell/graphs/contributors">링크</a></li><li>보면 확실히 2022년 이후에 열심히 함</li></ul>
+        <a id="bottom"></a>
+    </article>
+
+
+
+
+
+    <script src="colors.js"></script>
+
+    
+    <script src="nav.js"></script>
+    
+    
+    
+</body>
+
+</html>
