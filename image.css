@@ -62,6 +62,10 @@ CSS variables (`var(--black)`) are affected by scripts. (Everywhere else.)
   --gold-compl-trans: #003fbf60;
 }
 
+:root {
+  --sidebar-width: min(450px, 60%);
+}
+
 img {
   cursor: pointer;
 }

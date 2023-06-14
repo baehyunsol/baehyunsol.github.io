@@ -1,3 +1,7 @@
+:root {
+  --sidebar-width: min(450px, 60%);
+}
+
 /*
 The default theme is dark.
 SCSS variables (`$black`) are not affected by scripts. (Inside code blocks, ...)
