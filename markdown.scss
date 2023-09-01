@@ -1,0 +1,1342 @@
+@import "colors";
+@import "units";
+
+body .markdown {
+    background-color: var(--dark);
+    color: var(--white);
+    font-size: $font-medium;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    transition: color 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
+
+    p {
+        margin-top: $margin-big;
+    }
+
+    ::selection {
+        background-color: var(--dark-compl);
+        color: var(--white-compl);
+        text-decoration-color: var(--white-compl);
+    }
+
+    img, video, iframe {
+        max-width: $image-medium;
+        max-height: $image-medium;
+    }
+
+}
+
+/* Footnotes */
+.markdown {
+
+    hr.footnote-hr {
+        margin-top: $h1-margin;
+    }
+
+    div.footnote-cite {
+        margin-top: $margin-medium;
+        margin-bottom: $margin-medium;
+    }
+
+    span.footnote-ref {
+        vertical-align: super;
+        font-size: $font-small;
+
+        a {
+            border: none;
+        }
+
+    }
+
+}
+
+/* Blockquote */
+.markdown {
+
+    blockquote {
+        background-color: var(--black-trans);
+        width: 75%;
+        border-left: $border-big solid $gray;
+        padding: $padding-medium;
+    }
+
+}
+
+/* Colors */
+.markdown {
+
+    
+    .color-black {
+        color: var(--black);
+    }
+
+    .color-black::selection, .color-black ::selection {
+        color: var(--black-compl);
+    }
+
+    .highlight-black {
+        background-color: var(--black);
+    }
+
+    .highlight-black::selection {
+        background-color: var(--black-compl);
+    }
+
+    .color-black svg {
+        path, rect, circle {
+            fill: var(--black);
+        }
+    }
+    
+    .color-dark {
+        color: var(--dark);
+    }
+
+    .color-dark::selection, .color-dark ::selection {
+        color: var(--dark-compl);
+    }
+
+    .highlight-dark {
+        background-color: var(--dark);
+    }
+
+    .highlight-dark::selection {
+        background-color: var(--dark-compl);
+    }
+
+    .color-dark svg {
+        path, rect, circle {
+            fill: var(--dark);
+        }
+    }
+    
+    .color-gray {
+        color: var(--gray);
+    }
+
+    .color-gray::selection, .color-gray ::selection {
+        color: var(--gray-compl);
+    }
+
+    .highlight-gray {
+        background-color: var(--gray);
+    }
+
+    .highlight-gray::selection {
+        background-color: var(--gray-compl);
+    }
+
+    .color-gray svg {
+        path, rect, circle {
+            fill: var(--gray);
+        }
+    }
+    
+    .color-lightgray {
+        color: var(--lightgray);
+    }
+
+    .color-lightgray::selection, .color-lightgray ::selection {
+        color: var(--lightgray-compl);
+    }
+
+    .highlight-lightgray {
+        background-color: var(--lightgray);
+    }
+
+    .highlight-lightgray::selection {
+        background-color: var(--lightgray-compl);
+    }
+
+    .color-lightgray svg {
+        path, rect, circle {
+            fill: var(--lightgray);
+        }
+    }
+    
+    .color-white {
+        color: var(--white);
+    }
+
+    .color-white::selection, .color-white ::selection {
+        color: var(--white-compl);
+    }
+
+    .highlight-white {
+        background-color: var(--white);
+    }
+
+    .highlight-white::selection {
+        background-color: var(--white-compl);
+    }
+
+    .color-white svg {
+        path, rect, circle {
+            fill: var(--white);
+        }
+    }
+    
+    .color-red {
+        color: var(--red);
+    }
+
+    .color-red::selection, .color-red ::selection {
+        color: var(--red-compl);
+    }
+
+    .highlight-red {
+        background-color: var(--red);
+    }
+
+    .highlight-red::selection {
+        background-color: var(--red-compl);
+    }
+
+    .color-red svg {
+        path, rect, circle {
+            fill: var(--red);
+        }
+    }
+    
+    .color-green {
+        color: var(--green);
+    }
+
+    .color-green::selection, .color-green ::selection {
+        color: var(--green-compl);
+    }
+
+    .highlight-green {
+        background-color: var(--green);
+    }
+
+    .highlight-green::selection {
+        background-color: var(--green-compl);
+    }
+
+    .color-green svg {
+        path, rect, circle {
+            fill: var(--green);
+        }
+    }
+    
+    .color-slateblue {
+        color: var(--slateblue);
+    }
+
+    .color-slateblue::selection, .color-slateblue ::selection {
+        color: var(--slateblue-compl);
+    }
+
+    .highlight-slateblue {
+        background-color: var(--slateblue);
+    }
+
+    .highlight-slateblue::selection {
+        background-color: var(--slateblue-compl);
+    }
+
+    .color-slateblue svg {
+        path, rect, circle {
+            fill: var(--slateblue);
+        }
+    }
+    
+    .color-blue {
+        color: var(--blue);
+    }
+
+    .color-blue::selection, .color-blue ::selection {
+        color: var(--blue-compl);
+    }
+
+    .highlight-blue {
+        background-color: var(--blue);
+    }
+
+    .highlight-blue::selection {
+        background-color: var(--blue-compl);
+    }
+
+    .color-blue svg {
+        path, rect, circle {
+            fill: var(--blue);
+        }
+    }
+    
+    .color-aqua {
+        color: var(--aqua);
+    }
+
+    .color-aqua::selection, .color-aqua ::selection {
+        color: var(--aqua-compl);
+    }
+
+    .highlight-aqua {
+        background-color: var(--aqua);
+    }
+
+    .highlight-aqua::selection {
+        background-color: var(--aqua-compl);
+    }
+
+    .color-aqua svg {
+        path, rect, circle {
+            fill: var(--aqua);
+        }
+    }
+    
+    .color-emerald {
+        color: var(--emerald);
+    }
+
+    .color-emerald::selection, .color-emerald ::selection {
+        color: var(--emerald-compl);
+    }
+
+    .highlight-emerald {
+        background-color: var(--emerald);
+    }
+
+    .highlight-emerald::selection {
+        background-color: var(--emerald-compl);
+    }
+
+    .color-emerald svg {
+        path, rect, circle {
+            fill: var(--emerald);
+        }
+    }
+    
+    .color-turquoise {
+        color: var(--turquoise);
+    }
+
+    .color-turquoise::selection, .color-turquoise ::selection {
+        color: var(--turquoise-compl);
+    }
+
+    .highlight-turquoise {
+        background-color: var(--turquoise);
+    }
+
+    .highlight-turquoise::selection {
+        background-color: var(--turquoise-compl);
+    }
+
+    .color-turquoise svg {
+        path, rect, circle {
+            fill: var(--turquoise);
+        }
+    }
+    
+    .color-seagreen {
+        color: var(--seagreen);
+    }
+
+    .color-seagreen::selection, .color-seagreen ::selection {
+        color: var(--seagreen-compl);
+    }
+
+    .highlight-seagreen {
+        background-color: var(--seagreen);
+    }
+
+    .highlight-seagreen::selection {
+        background-color: var(--seagreen-compl);
+    }
+
+    .color-seagreen svg {
+        path, rect, circle {
+            fill: var(--seagreen);
+        }
+    }
+    
+    .color-violet {
+        color: var(--violet);
+    }
+
+    .color-violet::selection, .color-violet ::selection {
+        color: var(--violet-compl);
+    }
+
+    .highlight-violet {
+        background-color: var(--violet);
+    }
+
+    .highlight-violet::selection {
+        background-color: var(--violet-compl);
+    }
+
+    .color-violet svg {
+        path, rect, circle {
+            fill: var(--violet);
+        }
+    }
+    
+    .color-pink {
+        color: var(--pink);
+    }
+
+    .color-pink::selection, .color-pink ::selection {
+        color: var(--pink-compl);
+    }
+
+    .highlight-pink {
+        background-color: var(--pink);
+    }
+
+    .highlight-pink::selection {
+        background-color: var(--pink-compl);
+    }
+
+    .color-pink svg {
+        path, rect, circle {
+            fill: var(--pink);
+        }
+    }
+    
+    .color-grassgreen {
+        color: var(--grassgreen);
+    }
+
+    .color-grassgreen::selection, .color-grassgreen ::selection {
+        color: var(--grassgreen-compl);
+    }
+
+    .highlight-grassgreen {
+        background-color: var(--grassgreen);
+    }
+
+    .highlight-grassgreen::selection {
+        background-color: var(--grassgreen-compl);
+    }
+
+    .color-grassgreen svg {
+        path, rect, circle {
+            fill: var(--grassgreen);
+        }
+    }
+    
+    .color-gold {
+        color: var(--gold);
+    }
+
+    .color-gold::selection, .color-gold ::selection {
+        color: var(--gold-compl);
+    }
+
+    .highlight-gold {
+        background-color: var(--gold);
+    }
+
+    .highlight-gold::selection {
+        background-color: var(--gold-compl);
+    }
+
+    .color-gold svg {
+        path, rect, circle {
+            fill: var(--gold);
+        }
+    }
+    
+    .color-brown {
+        color: var(--brown);
+    }
+
+    .color-brown::selection, .color-brown ::selection {
+        color: var(--brown-compl);
+    }
+
+    .highlight-brown {
+        background-color: var(--brown);
+    }
+
+    .highlight-brown::selection {
+        background-color: var(--brown-compl);
+    }
+
+    .color-brown svg {
+        path, rect, circle {
+            fill: var(--brown);
+        }
+    }
+    
+
+    /* Default color */
+    svg {
+        path, rect, circle {
+            fill: var(--white);
+        }
+    }
+}
+
+/* Box */
+.markdown {
+
+    span.box {
+        padding: $padding-medium;
+        border: $border-medium solid var(--gray);
+    }
+
+    div.box {
+        max-width: 90%;
+        padding: $padding-medium;
+        margin: $margin-big $margin-medium;
+        border: $border-medium solid var(--gray);
+    }
+
+    .box.no-border {
+        border: none;
+    }
+
+    .box.inline {
+        display: inline-block;
+    }
+
+}
+
+/* Sizes */
+.markdown {
+
+    
+    .size-tiny {
+        font-size: $font-tiny;
+
+        img, video, iframe {
+            max-width: $image-tiny;
+            max-height: $image-tiny;
+        }
+    }
+
+    .line-height-tiny {
+        line-height: $line-height-tiny;
+
+        pre.fenced-code-block {
+            line-height: $line-height-tiny;
+        }
+    }
+
+    .box.width-tiny {
+        width: $box-tiny;
+    }
+
+    .box.height-tiny {
+        height: $box-tiny;
+    }
+    
+    .size-small {
+        font-size: $font-small;
+
+        img, video, iframe {
+            max-width: $image-small;
+            max-height: $image-small;
+        }
+    }
+
+    .line-height-small {
+        line-height: $line-height-small;
+
+        pre.fenced-code-block {
+            line-height: $line-height-small;
+        }
+    }
+
+    .box.width-small {
+        width: $box-small;
+    }
+
+    .box.height-small {
+        height: $box-small;
+    }
+    
+    .size-medium {
+        font-size: $font-medium;
+
+        img, video, iframe {
+            max-width: $image-medium;
+            max-height: $image-medium;
+        }
+    }
+
+    .line-height-medium {
+        line-height: $line-height-medium;
+
+        pre.fenced-code-block {
+            line-height: $line-height-medium;
+        }
+    }
+
+    .box.width-medium {
+        width: $box-medium;
+    }
+
+    .box.height-medium {
+        height: $box-medium;
+    }
+    
+    .size-big {
+        font-size: $font-big;
+
+        img, video, iframe {
+            max-width: $image-big;
+            max-height: $image-big;
+        }
+    }
+
+    .line-height-big {
+        line-height: $line-height-big;
+
+        pre.fenced-code-block {
+            line-height: $line-height-big;
+        }
+    }
+
+    .box.width-big {
+        width: $box-big;
+    }
+
+    .box.height-big {
+        height: $box-big;
+    }
+    
+    .size-giant {
+        font-size: $font-giant;
+
+        img, video, iframe {
+            max-width: $image-giant;
+            max-height: $image-giant;
+        }
+    }
+
+    .line-height-giant {
+        line-height: $line-height-giant;
+
+        pre.fenced-code-block {
+            line-height: $line-height-giant;
+        }
+    }
+
+    .box.width-giant {
+        width: $box-giant;
+    }
+
+    .box.height-giant {
+        height: $box-giant;
+    }
+    
+
+}
+
+/* Alignments */
+.markdown {
+
+    .align-center {
+        text-align: center;
+
+        table, img, video, iframe, .box, blockquote, svg {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    }
+
+    .align-right {
+        text-align: right;
+
+        table, img, video, iframe, .box, blockquote, svg {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+    }
+
+    .align-left {
+        text-align: left;
+
+        table, img, video, iframe, .box, blockquote, svg {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+    }
+}
+
+/* Headers */
+.markdown {
+
+    
+    h1 {
+        font-size: $h1-font-size;
+        margin-top: $h1-margin;
+        margin-bottom: $h1-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h1:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+    h2 {
+        font-size: $h2-font-size;
+        margin-top: $h2-margin;
+        margin-bottom: $h2-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h2:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+    h3 {
+        font-size: $h3-font-size;
+        margin-top: $h3-margin;
+        margin-bottom: $h3-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h3:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+    h4 {
+        font-size: $h4-font-size;
+        margin-top: $h4-margin;
+        margin-bottom: $h4-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h4:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+    h5 {
+        font-size: $h5-font-size;
+        margin-top: $h5-margin;
+        margin-bottom: $h5-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h5:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+    h6 {
+        font-size: $h6-font-size;
+        margin-top: $h6-margin;
+        margin-bottom: $h6-margin / 2;
+        transition: color 0.3s;
+    }
+
+    h6:hover {
+        color: var(--white-trans);
+        transition: color 0.3s;
+    }
+    
+
+    h1, h2 {
+        border-bottom: $border-medium solid var(--gray);
+    }
+
+}
+
+/* Tooltips */
+.markdown {
+
+    .tooltip-message {
+        position: fixed;
+        visibility: hidden;
+        border: $border-medium solid var(--black);
+        border-radius: $round-border-medium;
+        padding: $padding-small;
+        background-color: var(--gray);
+        max-width: 80%;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .tooltip-container:hover .tooltip-message {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+
+}
+
+/* Links */
+.markdown {
+
+    a:link {
+        border-bottom: $border-medium solid var(--aqua-trans);
+        color: var(--aqua);
+        text-decoration: none;
+        transition: border 0.3s;
+    }
+
+    a:visited {
+        color: var(--aqua);
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+        border-bottom: $border-medium solid var(--aqua);
+    }
+
+    a::selection {
+        color: var(--aqua-compl);
+    }
+
+}
+
+/* Fenced Code Block */
+.markdown {
+
+    
+    pre.line-num-width-0 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (0 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-1 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (1 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-2 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (2 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-3 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (3 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-4 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (4 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-5 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (5 + 1) / 2;
+        }
+    }
+    
+    pre.line-num-width-6 {
+        span.code-fence-index {
+            min-width: $padding-medium + $font-medium * (6 + 1) / 2;
+        }
+    }
+    
+
+    pre.fenced-code-block {
+        padding: $padding-medium;
+        background-color: $black;
+        width: 90%;
+        overflow: auto;
+        line-height: 1.0;
+        margin-top: $margin-big;
+        margin-bottom: $margin-big;
+
+        /* Not affected by themes */
+        code {
+            color: $white;
+
+            
+            .color-black {
+                color: $black;
+            }
+        
+            .color-black::selection {
+                color: $black-compl;
+            }
+            
+            .color-dark {
+                color: $dark;
+            }
+        
+            .color-dark::selection {
+                color: $dark-compl;
+            }
+            
+            .color-gray {
+                color: $gray;
+            }
+        
+            .color-gray::selection {
+                color: $gray-compl;
+            }
+            
+            .color-lightgray {
+                color: $lightgray;
+            }
+        
+            .color-lightgray::selection {
+                color: $lightgray-compl;
+            }
+            
+            .color-white {
+                color: $white;
+            }
+        
+            .color-white::selection {
+                color: $white-compl;
+            }
+            
+            .color-red {
+                color: $red;
+            }
+        
+            .color-red::selection {
+                color: $red-compl;
+            }
+            
+            .color-green {
+                color: $green;
+            }
+        
+            .color-green::selection {
+                color: $green-compl;
+            }
+            
+            .color-slateblue {
+                color: $slateblue;
+            }
+        
+            .color-slateblue::selection {
+                color: $slateblue-compl;
+            }
+            
+            .color-blue {
+                color: $blue;
+            }
+        
+            .color-blue::selection {
+                color: $blue-compl;
+            }
+            
+            .color-aqua {
+                color: $aqua;
+            }
+        
+            .color-aqua::selection {
+                color: $aqua-compl;
+            }
+            
+            .color-emerald {
+                color: $emerald;
+            }
+        
+            .color-emerald::selection {
+                color: $emerald-compl;
+            }
+            
+            .color-turquoise {
+                color: $turquoise;
+            }
+        
+            .color-turquoise::selection {
+                color: $turquoise-compl;
+            }
+            
+            .color-seagreen {
+                color: $seagreen;
+            }
+        
+            .color-seagreen::selection {
+                color: $seagreen-compl;
+            }
+            
+            .color-violet {
+                color: $violet;
+            }
+        
+            .color-violet::selection {
+                color: $violet-compl;
+            }
+            
+            .color-pink {
+                color: $pink;
+            }
+        
+            .color-pink::selection {
+                color: $pink-compl;
+            }
+            
+            .color-grassgreen {
+                color: $grassgreen;
+            }
+        
+            .color-grassgreen::selection {
+                color: $grassgreen-compl;
+            }
+            
+            .color-gold {
+                color: $gold;
+            }
+        
+            .color-gold::selection {
+                color: $gold-compl;
+            }
+            
+            .color-brown {
+                color: $brown;
+            }
+        
+            .color-brown::selection {
+                color: $brown-compl;
+            }
+            
+        }
+
+        span.code-fence-index {
+            display: inline-block;
+            border-right: $border-medium solid $emerald;
+            text-align: right;
+            padding-right: $padding-medium;
+            margin-right: $margin-medium;
+            padding-top: $padding-tiny;
+            padding-bottom: $padding-tiny;
+        }
+
+        span.code-fence-row {
+            display: inline-block;
+            width: 100%;
+            min-width: max-content;  /* Thank you Chat GPT */
+        }
+
+        span.code-fence-row:hover {
+            background-color: $dark;
+        }
+
+        span.code-fence-code {
+            display: inline-block;
+            padding-top: $padding-tiny;
+            padding-bottom: $padding-tiny;
+        }
+
+        span.highlight.code-fence-row {
+            background-color: $black-compl;
+            color: $white-compl;
+
+            span.code-fence-index {
+                border-right: $border-medium solid $emerald-compl;
+            }
+
+        }
+
+        span.highlight.code-fence-row:hover {
+            background-color: $black-compl-trans;
+        }
+
+        
+        span.highlight span .color-black {
+            color: $black-compl;
+        }
+        
+        span.highlight span .color-dark {
+            color: $dark-compl;
+        }
+        
+        span.highlight span .color-gray {
+            color: $gray-compl;
+        }
+        
+        span.highlight span .color-lightgray {
+            color: $lightgray-compl;
+        }
+        
+        span.highlight span .color-white {
+            color: $white-compl;
+        }
+        
+        span.highlight span .color-red {
+            color: $red-compl;
+        }
+        
+        span.highlight span .color-green {
+            color: $green-compl;
+        }
+        
+        span.highlight span .color-slateblue {
+            color: $slateblue-compl;
+        }
+        
+        span.highlight span .color-blue {
+            color: $blue-compl;
+        }
+        
+        span.highlight span .color-aqua {
+            color: $aqua-compl;
+        }
+        
+        span.highlight span .color-emerald {
+            color: $emerald-compl;
+        }
+        
+        span.highlight span .color-turquoise {
+            color: $turquoise-compl;
+        }
+        
+        span.highlight span .color-seagreen {
+            color: $seagreen-compl;
+        }
+        
+        span.highlight span .color-violet {
+            color: $violet-compl;
+        }
+        
+        span.highlight span .color-pink {
+            color: $pink-compl;
+        }
+        
+        span.highlight span .color-grassgreen {
+            color: $grassgreen-compl;
+        }
+        
+        span.highlight span .color-gold {
+            color: $gold-compl;
+        }
+        
+        span.highlight span .color-brown {
+            color: $brown-compl;
+        }
+        
+
+    }
+
+    button.copy-fenced-code {
+        background-color: $dark;
+        border: none;
+        color: $white;
+        font-size: $font-medium;
+        padding: $padding-small;
+        margin-top: $margin-medium;
+        margin-left: $margin-medium;
+        border-radius: $round-border-medium;
+        cursor: pointer;
+        transition: background-color 0.5s ease-out;
+    }
+
+    button.copy-fenced-code:hover {
+        background-color: $white-trans;
+        transition: background-color 0.5s ease-out;
+    }
+
+}
+
+/* Code Spans */
+.markdown {
+
+    code.inline-code-span {
+        color: $gold;
+        background-color: $black;
+        border-radius: $round-border-tiny;
+        padding: $padding-tiny $padding-small $padding-tiny;
+        white-space: pre;
+    }
+
+    code.inline-code-span::selection {
+        color: $gold-compl;
+    }
+
+    table tr:nth-last-child(odd) code.inline-code-span {
+        background-color: $gray;
+    }
+
+}
+
+/* Table */
+.markdown {
+
+    table.headless-table {
+        border: $border-medium solid var(--white);
+    }
+
+    table {
+        border-collapse: collapse;
+        margin: $margin-big $margin-medium;
+        /*break-inside: avoid;  // needs more research */
+
+        th {
+            background-color: var(--gray);
+            transition: padding 0.5s ease-out;
+            border: $border-medium solid var(--lightgray);
+        }
+
+        tr th:first-child {
+            border-left: $border-big solid var(--gray);
+        }
+
+        tr th:last-child {
+            border-right: $border-big solid var(--gray);
+        }
+
+        tr:first-child th {
+            border-top: $border-big solid var(--gray);
+        }
+
+        tr:last-child th {
+            border-bottom: $border-big solid var(--gray);
+        }
+
+        td, th {
+            padding: $padding-medium + $padding-small;
+        }
+
+        tr:nth-last-child(odd) {
+            background-color: var(--black);
+        }
+
+        tr:nth-last-child(even) {
+            background-color: var(--dark);
+        }
+    
+        thead.collapsible {
+            cursor: pointer;
+        }
+    
+        thead.collapsed th {
+            padding: $padding-small;
+            transition: padding 0.5s ease-out;
+        }
+
+        .invisible {
+    
+            th, td {
+                display: none;
+            }
+    
+        }
+
+    }
+
+}
+
+/*
+----- Lists -----
+*/
+
+.markdown {
+
+    ul, ol {
+        padding-left: $padding-giant;
+    }
+
+    ul.no-bullet-list, ol.no-bullet-list {
+        list-style-type: none;
+    }
+
+    li {
+        padding: $padding-small;
+    }
+
+}
+
+/*
+----- Checkbox for task lists -----
+*/
+
+.markdown {
+    div.unchecked-box, div.checked-box {
+        position: relative;
+        top: $font-medium / 4;
+        display: inline-block;
+        border-radius: $round-border-small;
+        width: $font-medium;
+        height: $font-medium;
+    }
+
+    div.unchecked-box {
+        background-color: var(--gray);
+        margin-right: $padding-medium;
+    }
+
+    div.checked-box {
+        background-color: var(--black);
+        margin-right: $padding-medium;
+    }
+
+    span.checkmark {
+        display: block;
+        position: relative;
+        left: $font-medium / 4;
+        top: $font-medium / 8;
+        width: $font-medium / 3;
+        height: $font-medium / 2;
+        border: {
+            bottom: $border-medium solid var(--white);
+            right: $border-medium solid var(--white);
+        }
+        transform: rotate(45deg);
+    }
+
+    span.triangle {
+        display: block;
+        position: relative;
+        width: 0;
+        height: 0;
+        left: $font-medium / 6;
+        top: $font-medium / 3;
+        border-left: $font-medium / 3 solid #0000;
+        border-right: $font-medium / 3 solid #0000;
+        border-bottom: $font-medium / 3 solid var(--white);
+    }
+}
+
+/*
+----- Sidebar -----
+*/
+
+#mdxt-sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;  /* I want it to be above the header (in my personal blog) */
+  top: 0;
+  left: 0;
+  background-color: var(--black);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+#mdxt-sidebar-close-button {
+    position: absolute;
+    top: 0;
+    right: $margin-medium;
+    font-size: $font-giant;
+    cursor: pointer;
+}
+
+#mdxt-sidebar-content {
+    padding: $padding-giant;
+}
+
+#mdxt-sidebar-toggle {
+    background-color: var(--gray);
+    position: fixed;
+    top: 15%;
+    height: 70%;
+    left: 0;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#mdxt-sidebar-button-content {
+    display: block;
+    padding: $padding-big $padding-small 0px $padding-small;
+}

@@ -1,0 +1,67 @@
+@import "units";
+@import "colors";
+
+:root {
+    --horiz-padding: 0px;
+    --font-size-landscape: 21px;
+    --font-size-portrait: 16px;
+}
+
+@media screen and (orientation: landscape) {
+
+    html {
+        font-size: var(--font-size-landscape);
+    }
+
+    article {
+        margin-top: $header-height + $padding-big;
+        margin-bottom: 0px;
+        margin-left: 9%;
+        margin-right: 9%;
+        max-width: 82%;
+    }
+}
+
+@media screen and (orientation: portrait) {
+
+    html {
+        font-size: var(--font-size-portrait);
+    }
+
+    article {
+        margin-top: $header-height + $padding-big;
+        margin-bottom: 0px;
+        margin-left: 5%;
+        margin-right: 5%;
+        max-width: 90%;
+    }
+}
+
+@media print {
+    body {
+        .markdown {
+            pre {
+                overflow: none;
+            }
+            .copy-fenced-code {
+                display: none;
+            }
+        }
+
+    }
+}
+
+article, footer {
+    padding-left: var(--horiz-padding);
+    padding-right: var(--horiz-padding);
+}
+
+html {
+    font-family: 'Nanum Gothic Coding';
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--dark);
+    transition: background-color 0.5s ease-out;
+}
